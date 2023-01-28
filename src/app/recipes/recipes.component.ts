@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
+import { DataStorageService } from '../shared/data-storage.service';
 import { Recipe } from './recipe.model';
 import { RecipeService } from './recipe.service';
 
@@ -11,7 +12,7 @@ import { RecipeService } from './recipe.service';
 export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe;
   clicked = false;
-  constructor(private recipeService: RecipeService) { }
+  constructor(private recipeService: RecipeService, private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void {
     this.recipeService.recipeSelected.subscribe(
@@ -19,6 +20,8 @@ export class RecipesComponent implements OnInit {
         this.selectedRecipe = recipe
       }
     )
+
+    this.dataStorageService.fetchRecipes().subscribe();
   }
 
   handleClick() {
